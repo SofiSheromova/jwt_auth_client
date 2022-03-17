@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Command to change the configuration of githooks `git config core.hooksPath .githooks/`
+
+# Skip pre-commit hooks: git commit --no-verify -m "commit message"
+
+flutter analyze
+if [ $? -ne 0 ]; then
+	cat <<\EOF
+
+LINTER_ERROR:
+ Show errors: `flutter analyze`;
+ Errors autofix: `dart fix --apply`. Note: not all errors can be automatically fixed.
+EOF
+  exit 1
+fi
+
+flutter format --set-exit-if-changed --line-length=120 --dry-run .
+if [ $? -ne 0 ]; then
+	cat <<\EOF
+
+FORMAT_ERROR:
+ Show files with errors: `flutter format --line-length=120 --dry-run .`;
+ Errors autofix: `flutter format --line-length=120 .`
+EOF
+  exit 1
+fi

@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jwt_auth_client/jwt_auth_client_app.dart';
+import 'package:jwt_auth_client/presentation/jwt_auth_client_app.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
