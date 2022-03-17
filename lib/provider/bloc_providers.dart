@@ -1,3 +1,4 @@
+import 'package:jwt_auth_client/domain/repository/auth_repository.dart';
 import 'package:jwt_auth_client/presentation/global_blocs/auth/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +13,7 @@ class BlocProviders extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(),
-          lazy: false,
+          create: (context) => AuthCubit(context.read<AuthRepository>()),
         ),
       ],
       child: child,

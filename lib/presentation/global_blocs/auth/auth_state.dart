@@ -6,3 +6,7 @@ abstract class AuthState extends Equatable {
 }
 
 class AuthInitState extends AuthState {}
+
+class AuthLoginSuccessState extends AuthState {}
+
+class AuthLogoutState extends AuthState {}
