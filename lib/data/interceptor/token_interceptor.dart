@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_auth_client/data/constants/request_keys.dart';
 import 'package:jwt_auth_client/data/errors/user_is_not_authorized_exception.dart';
 
+/// Adds the "Authorization" field to the headers.
 class TokenInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {

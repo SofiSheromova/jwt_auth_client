@@ -4,11 +4,8 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:jwt_auth_client/data/constants/request_keys.dart';
 
-class ApiSettings {
-  static const customHeaders = [RequestKeys.authorizationField, RequestKeys.dateTimeField];
-}
-
 /// Adds an "X-Signature" token to the headers
+/// explanations -> https://youtrack.doubletapp.ai/youtrack/articles/DTDEVOPS-A-73/X-Signature
 class SecretInterceptor extends Interceptor {
   final String _secret;
 
@@ -55,4 +52,9 @@ class SecretInterceptor extends Interceptor {
   List<String> _parseDictToListOfLines(Map<String, dynamic> dict) {
     return dict.entries.map((e) => '${e.key}:${e.value}').toList();
   }
+}
+
+class ApiSettings {
+  /// Custom headers whose contents are used when calculating the "X-Signature" field
+  static const customHeaders = [RequestKeys.authorizationField, RequestKeys.dateTimeField];
 }

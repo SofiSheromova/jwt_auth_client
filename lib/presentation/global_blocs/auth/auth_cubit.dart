@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:jwt_auth_client/data/errors/user_is_not_authorized_exception.dart';
 import 'package:jwt_auth_client/domain/repository/auth_repository.dart';
 import 'package:jwt_auth_client/presentation/global_blocs/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,5 +32,17 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() {
     emit(AuthLogoutState());
     return _authRepository.logout();
+  }
+
+  /// Handles an error when the user is not authorized by setting the state of AuthLogoutState
+  Future<void> withAuthCheck(Future<void> Function() request) async {
+    try {
+      return await request();
+    } on DioError catch (err) {
+      if (err.error is UserIsNotAuthorizedException) {
+        return emit(AuthLogoutState());
+      }
+      rethrow;
+    }
   }
 }
