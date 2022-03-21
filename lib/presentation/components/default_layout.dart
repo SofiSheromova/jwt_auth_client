@@ -20,7 +20,12 @@ class DefaultLayout extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthLogoutState) {
-          Navigator.pushAndRemoveUntil(context, LoginRoute(), (route) => false);
+          // equivalent to clear stack and push
+          Navigator.pushAndRemoveUntil(
+            context,
+            LoginRoute(),
+            (route) => false,
+          );
         }
       },
       builder: (context, state) {

@@ -34,7 +34,7 @@ class TokenVerifier {
     }
   }
 
-  Future<void> _verifyToken<T>() async {
+  Future<void> _verifyToken() async {
     const storage = FlutterSecureStorage();
     final accessToken = await storage.read(key: RequestKeys.accessToken);
     final refreshToken = await storage.read(key: RequestKeys.refreshToken);
@@ -57,7 +57,7 @@ class TokenVerifier {
     }
   }
 
-  Future<void> _tryRegenerateToken<T>() async {
+  Future<void> _tryRegenerateToken() async {
     const storage = FlutterSecureStorage();
     final refreshToken = await storage.read(key: RequestKeys.refreshToken);
 
