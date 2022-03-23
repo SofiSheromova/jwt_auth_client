@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_auth_client/data/api/auth_api.dart';
-import 'package:jwt_auth_client/data/constants/error_types.dart';
 import 'package:jwt_auth_client/data/constants/request_keys.dart';
 import 'package:jwt_auth_client/data/errors/user_is_not_authorized_exception.dart';
 import 'package:jwt_auth_client/data/models/auth/update_tokens_request.dart';
@@ -25,7 +24,7 @@ class TokenVerifier {
       await _lock.synchronized(_verifyToken);
       return await request();
     } on DioError catch (err) {
-      if (err.error is ErrorResponseException && err.error.type == ErrorTypes.tokenRevoked) {
+      if (err.error is ErrorResponseException && _isTokenRevoked(err.error)) {
         // To avoid repeated update of the token, it is necessary to perform only one check at a time
         await _lock.synchronized(_tryRegenerateToken);
         return await request();
@@ -73,7 +72,7 @@ class TokenVerifier {
     try {
       await _regenerateAccessToken(refreshToken);
     } on Exception catch (err) {
-      if (err is DioError && err.error is ErrorResponseException && err.error.type == ErrorTypes.tokenAlreadyRevoked) {
+      if (err is DioError && err.error is ErrorResponseException && _isTokenRevoked(err.error)) {
         // For some reasons the token can be invalidated before it is expired by the backend.
         // Then we should navigate the user back to login page.
         await _removeTokens();
@@ -89,6 +88,7 @@ class TokenVerifier {
 
   Future<void> _regenerateAccessToken(String refreshToken) async {
     // Make request to server to get the new access token from server using refresh token
+    await AuthApi(_dio).updateTokens(UpdateTokensRequest(refreshToken: refreshToken));
     final authResponse = await AuthApi(_dio).updateTokens(UpdateTokensRequest(refreshToken: refreshToken));
     await _saveTokens(authResponse.accessToken, refreshToken);
   }
@@ -104,4 +104,7 @@ class TokenVerifier {
     await storage.write(key: RequestKeys.accessToken, value: accessToken);
     await storage.write(key: RequestKeys.refreshToken, value: refreshToken);
   }
+
+  bool _isTokenRevoked(ErrorResponseException err) =>
+      err.type == 'token_revoked' || err.type == 'token_already_revoked';
 }

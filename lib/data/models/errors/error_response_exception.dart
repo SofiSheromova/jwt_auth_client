@@ -8,11 +8,16 @@ class ErrorResponseException implements Exception {
   final String type;
   @JsonKey(defaultValue: '')
   final String message;
+  final int? code;
 
   ErrorResponseException({
     required this.type,
     required this.message,
+    required this.code,
   });
 
-  factory ErrorResponseException.fromJson(Map<String, dynamic> json) => _$ErrorResponseExceptionFromJson(json);
+  factory ErrorResponseException.fromJson(Map<String, dynamic> json, int? code) {
+    json['code'] = code;
+    return _$ErrorResponseExceptionFromJson(json);
+  }
 }

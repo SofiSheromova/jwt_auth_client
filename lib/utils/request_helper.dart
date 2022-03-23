@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:jwt_auth_client/data/errors/user_is_not_authorized_exception.dart';
 import 'package:jwt_auth_client/domain/resource.dart';
 import 'package:jwt_auth_client/presentation/global_blocs/auth/auth_cubit.dart';
@@ -19,7 +18,7 @@ class RequestHelper {
     try {
       return Resource.success(await apiRequest());
     } catch (err) {
-      if (withAuthCheck && err is DioError && err.error is UserIsNotAuthorizedException) {
+      if (withAuthCheck && err is UserIsNotAuthorizedException) {
         _authCubit.onLogout();
       }
       return Resource.error(err);

@@ -23,7 +23,7 @@ class ErrorParserInterceptor extends Interceptor {
         DioError(
           requestOptions: err.requestOptions,
           response: err.response,
-          error: ErrorResponseException.fromJson(jsonData),
+          error: ErrorResponseException.fromJson(jsonData, err.response?.statusCode),
         ),
       );
     }
