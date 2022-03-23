@@ -9,7 +9,7 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    logger.d('${options.method} ${options.uri.path}', null, StackTrace.empty);
+    logger.d('Request: ${options.method} ${options.uri.path}', null, StackTrace.empty);
     super.onRequest(options, handler);
   }
 
@@ -35,5 +35,16 @@ class LoggerInterceptor extends Interceptor {
     }
 
     super.onError(err, handler);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    logger.d(
+      'Response: ${response.requestOptions.method} ${response.requestOptions.uri.path}\n '
+      'body: ${response.data}',
+      null,
+      StackTrace.empty,
+    );
+    super.onResponse(response, handler);
   }
 }

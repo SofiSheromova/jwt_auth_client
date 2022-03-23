@@ -31,8 +31,8 @@ class RepositoryProviders extends StatelessWidget {
               Provider<AuthRepository>(
                 create: (context) => AuthRepositoryImpl(
                   context.read<AuthApi>(),
-                  context.read<TokenVerifier>(),
                   context.read<Logger>(),
+                  context.read<TokenVerifier>(),
                 ),
               ),
               Provider<ExhibitionsRepository>(

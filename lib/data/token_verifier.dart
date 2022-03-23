@@ -23,12 +23,12 @@ class TokenVerifier {
     try {
       // To avoid repeated update of the token, it is necessary to perform only one check at a time
       await _lock.synchronized(_verifyToken);
-      return request();
+      return await request();
     } on DioError catch (err) {
       if (err.error is ErrorResponseException && err.error.type == ErrorTypes.tokenRevoked) {
         // To avoid repeated update of the token, it is necessary to perform only one check at a time
         await _lock.synchronized(_tryRegenerateToken);
-        return request();
+        return await request();
       }
       rethrow;
     }

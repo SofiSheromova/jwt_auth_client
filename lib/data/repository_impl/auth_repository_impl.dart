@@ -8,17 +8,17 @@ import 'package:jwt_auth_client/data/constants/request_keys.dart';
 import 'package:jwt_auth_client/data/models/auth/auth_request.dart';
 import 'package:jwt_auth_client/data/models/auth/auth_response.dart';
 import 'package:jwt_auth_client/data/models/auth/update_tokens_request.dart';
+import 'package:jwt_auth_client/data/repository_impl/base_repository.dart';
 import 'package:jwt_auth_client/data/token_verifier.dart';
 import 'package:jwt_auth_client/domain/repository/auth_repository.dart';
 import 'package:jwt_auth_client/utils/utils.dart';
 import 'package:logger/logger.dart';
 
-class AuthRepositoryImpl implements AuthRepository {
+class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
   final AuthApi _authApi;
-  final TokenVerifier _tokenVerifier;
   final Logger _logger;
 
-  AuthRepositoryImpl(this._authApi, this._tokenVerifier, this._logger);
+  AuthRepositoryImpl(this._authApi, this._logger, TokenVerifier tokenVerifier) : super(tokenVerifier);
 
   @override
   Future<bool> checkTokenExistence() async {
@@ -56,6 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (err is DioError && err.error is SocketException) {
         rethrow;
       }
+      await _removeTokens();
       return false;
     }
     return true;
@@ -63,7 +64,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _tokenVerifier.withTokenVerification(_authApi.logout);
+    await withTokenVerification(_authApi.logout);
     await _removeTokens();
   }
 

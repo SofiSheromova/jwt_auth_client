@@ -18,7 +18,16 @@ class HomeScreen extends StatelessWidget {
             return ErrorText(state.error);
           }
           if (state is SuccessfulDataFetchState) {
-            return Text(state.data);
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: context.read<HomeCubit>().fetchData,
+                  child: const Text('update'),
+                ),
+                Text(state.data),
+              ],
+            );
           }
           return const CircularProgressIndicator();
         },
