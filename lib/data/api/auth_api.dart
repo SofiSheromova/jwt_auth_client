@@ -11,18 +11,23 @@ part 'auth_api.g.dart';
 abstract class AuthApi {
   factory AuthApi(Dio dio) = _AuthApi;
 
-  @POST('/auth/register')
+  @POST('/auth_service/register')
   @Extra({RequestKeys.skipToken: true})
   Future<AuthResponse> signUp(@Body() AuthRequest authRequest);
 
-  @POST('/auth/login')
+  @POST('/auth_service/login')
   @Extra({RequestKeys.skipToken: true})
   Future<AuthResponse> login(@Body() AuthRequest authRequest);
 
-  @POST('/auth/logout')
+  @POST('/auth_service/logout')
   Future<void> logout();
 
-  @POST('/auth/update-tokens')
+  @PUT('/auth_service/update_tokens')
   @Extra({RequestKeys.skipToken: true})
   Future<AuthResponse> updateTokens(@Body() UpdateTokensRequest updateTokensRequest);
+
+  // Users will not be able to revoke all tokens. The request exists to test the work.
+  @POST('/auth_service/revoke_all_tokens')
+  @Extra({RequestKeys.skipToken: true})
+  Future<String> revokeAllTokens(@Body() UpdateTokensRequest updateTokensRequest);
 }

@@ -25,6 +25,12 @@ class HomeScreen extends StatelessWidget {
                   onPressed: context.read<HomeCubit>().fetchData,
                   child: const Text('update'),
                 ),
+                const SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: context.read<HomeCubit>().revokeAllTokens,
+                  child: const Text('revoke all tokens'),
+                ),
+                const SizedBox(height: 20.0),
                 Text(state.data),
               ],
             );

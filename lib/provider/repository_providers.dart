@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:jwt_auth_client/data/api/exhibitions_api.dart';
-import 'package:jwt_auth_client/data/repository_impl/exhibitions_repository_impl.dart';
-import 'package:jwt_auth_client/domain/repository/exhibitions_repository.dart';
+import 'package:jwt_auth_client/data/api/content_api.dart';
+import 'package:jwt_auth_client/data/repository_impl/content_repository_impl.dart';
+import 'package:jwt_auth_client/domain/repository/content_repository.dart';
 import 'package:logger/logger.dart';
 import 'package:synchronized/synchronized.dart' as synchronized;
 import 'package:provider/provider.dart';
@@ -35,9 +35,9 @@ class RepositoryProviders extends StatelessWidget {
                   context.read<TokenVerifier>(),
                 ),
               ),
-              Provider<ExhibitionsRepository>(
-                create: (context) => ExhibitionsRepositoryImpl(
-                  context.read<ExhibitionsApi>(),
+              Provider<ContentRepository>(
+                create: (context) => ContentRepositoryImpl(
+                  context.read<ContentApi>(),
                   context.read<TokenVerifier>(),
                 ),
               ),

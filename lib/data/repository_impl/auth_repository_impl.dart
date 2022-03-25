@@ -31,13 +31,13 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
 
   @override
   Future<void> signUp(String email, String password) async {
-    final authResponse = await _authApi.signUp(AuthRequest(email: email, password: password));
+    final authResponse = await _authApi.signUp(AuthRequest(login: email, password: password));
     await _saveTokens(authResponse);
   }
 
   @override
   Future<void> login(String email, String password) async {
-    final authResponse = await _authApi.login(AuthRequest(email: email, password: password));
+    final authResponse = await _authApi.login(AuthRequest(login: email, password: password));
     await _saveTokens(authResponse);
   }
 
@@ -66,6 +66,18 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
   Future<void> logout() async {
     await withTokenVerification(_authApi.logout);
     await _removeTokens();
+  }
+
+  @override
+  Future<String> revokeAllTokens() async {
+    const storage = FlutterSecureStorage();
+
+    final refreshToken = await storage.read(key: RequestKeys.refreshToken);
+    await _removeTokens();
+    if (refreshToken == null) {
+      return 'token not found';
+    }
+    return await _authApi.revokeAllTokens(UpdateTokensRequest(refreshToken: refreshToken));
   }
 
   Future<void> _saveTokens(AuthResponse authResponse) async {

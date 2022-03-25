@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jwt_auth_client/data/interceptor/date_time_interceptor.dart';
 import 'package:jwt_auth_client/data/interceptor/error_parser_interceptor.dart';
 import 'package:jwt_auth_client/data/interceptor/logger_interceptor.dart';
 import 'package:jwt_auth_client/data/interceptor/secret_interceptor.dart';
@@ -30,8 +29,7 @@ class DioProviders extends StatelessWidget {
           )..interceptors.addAll([
               ErrorParserInterceptor(),
               TokenInterceptor(),
-              DateTimeInterceptor(),
-              SecretInterceptor(secret),
+              SimpleSecretInterceptor(secret),
               LoggerInterceptor(context.read<Logger>()),
             ]),
         ),

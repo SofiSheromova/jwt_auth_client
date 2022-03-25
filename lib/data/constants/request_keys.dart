@@ -2,7 +2,8 @@ class RequestKeys {
   // Headers
   static const String secretField = 'X-Signature';
   static const String dateTimeField = 'X-Datetime';
-  static const String authorizationField = 'Authorization';
+  static const String apiSecret = 'X-API-SECRET';
+  static const String authorizationField = 'Authentication';
 
   // Body
   static const String refreshToken = 'refresh_token';
