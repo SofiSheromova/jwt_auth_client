@@ -12,10 +12,9 @@ Service can be run locally if docker is installed.
 
 ## Startup client steps  
 
-1. Create a `config.json` file in the `/assets` folder (create a copy of the `config_example.json` and enter the required data);
-2. Install dependencies: `flutter pub get`
-3. Start file generation `flutter pub run build_runner build --delete-conflicting-outputs`
-4. Run the project `flutter run`
+1. Install dependencies: `flutter pub get`
+2. Start file generation `flutter pub run build_runner build --delete-conflicting-outputs`
+3. Run the project with environment variables `flutter run --dart-define API_URL=<api_url>  --dart-define API_SECRET=<api_secret>`
 
 <img src="screenshots/login_screen.png" alt="login screen" width="400"/>
 <img src="screenshots/home_screen.png" alt="login screen" width="400"/>

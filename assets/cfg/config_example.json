@@ -1,6 +1,0 @@
-{
-    "baseUrl": "https://test.api.pam.2tapp.cc/api",
-    "baseTestUrl": "https://test.api.pam.2tapp.cc/api",
-    "secret": "secret",
-    "secretTest": "secretTest"
-}

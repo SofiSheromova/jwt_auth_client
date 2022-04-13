@@ -296,13 +296,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
-  global_configuration:
-    dependency: "direct dev"
-    description:
-      name: global_configuration
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0-nullsafety.1"
   graphs:
     dependency: transitive
     description:
@@ -310,13 +303,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  http:
-    dependency: transitive
-    description:
-      name: http
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.13.4"
   http_multi_server:
     dependency: transitive
     description:

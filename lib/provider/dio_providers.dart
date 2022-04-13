@@ -5,15 +5,14 @@ import 'package:jwt_auth_client/data/interceptor/secret_interceptor.dart';
 import 'package:jwt_auth_client/data/interceptor/token_interceptor.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-import 'package:global_configuration/global_configuration.dart';
 import 'package:dio/dio.dart';
 
 class DioProviders extends StatelessWidget {
   final Widget child;
-  final String baseUrl = GlobalConfiguration().get('baseUrl');
-  final String secret = GlobalConfiguration().get('secret');
+  final String baseUrl = const String.fromEnvironment('API_URL');
+  final String secret = const String.fromEnvironment('API_SECRET');
 
-  DioProviders({Key? key, required this.child}) : super(key: key);
+  const DioProviders({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
